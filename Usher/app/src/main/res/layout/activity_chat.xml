@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back"
+    tools:context=".ChatActivity"
+    android:fitsSystemWindows="true">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/layout_chatbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_weight="0"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+
+                android:focusable="true"
+                app:srcCompat="@drawable/back"
+                tools:layout_editor_absoluteX="299dp"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <ImageView
+                android:id="@+id/profilepicture"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="3dp"
+                android:layout_weight="0"
+
+                android:gravity="center"
+                android:padding="10dp"
+                android:transitionName="userImage"
+                app:layout_constraintBottom_toBottomOf="@+id/layout_chatbox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.976"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/listview"
+                app:layout_constraintVertical_bias="0.604" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+
+                android:layout_gravity="center"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:paddingBottom="10dp"
+                android:paddingEnd="0dp"
+                android:paddingStart="5dp"
+
+                android:paddingTop="10dp"
+                android:textColor="#FFF"
+                android:textSize="20sp"
+                android:transitionName="userName"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:listSelector="@android:color/transparent"
+            android:longClickable="true"
+            android:scrollbars="none"
+            android:stackFromBottom="true"
+            android:transcriptMode="alwaysScroll"
+            app:layout_constraintBottom_toTopOf="@+id/layout_chatbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layout_chatbox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/box"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/reload"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="0"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:elevation="20dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:src="@drawable/reload"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_chatbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.976"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listview"
+            app:layout_constraintVertical_bias="0.604" />
+
+        <ImageView
+            android:id="@+id/hidekeyboard"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+
+            android:elevation="20dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:src="@drawable/down"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_chatbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.976"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listview"
+            app:layout_constraintVertical_bias="0.604" />
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:fontFamily="sans-serif-condensed"
+            android:hint="Type a message...."
+            android:imeOptions="actionNone"
+            android:inputType="text"
+            android:maxLength="25"
+            android:maxLines="1"
+            android:padding="5dp"
+
+            android:textColor="#FFF" />
+
+        <ImageView
+            android:id="@+id/send"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+
+            android:clickable="true"
+
+            android:elevation="40dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:src="@drawable/send"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_chatbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.976"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+            app:layout_constraintVertical_bias="0.86" />
+
+        <RelativeLayout
+            android:id="@+id/loadingPanel"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+
+            android:clickable="true"
+
+            android:elevation="40dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="15dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_chatbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.976"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+            app:layout_constraintVertical_bias="0.86">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

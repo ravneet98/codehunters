@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Usher</string>
+    <string-array name="accountType">
+        <item>Tourist</item>
+        <item>Guide</item>
+    </string-array>
+    <integer name="swing_anim_time">750</integer>
+    <string name="title_activity_maps">Map</string>
+</resources>
