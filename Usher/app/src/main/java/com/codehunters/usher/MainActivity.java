@@ -2,6 +2,7 @@ package com.codehunters.usher;
 
 import android.Manifest;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -16,7 +17,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,9 +33,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 
-import com.google.cloud.translate.Language;
-import com.google.cloud.translate.TranslateOptions;
-import com.google.cloud.translate.Translation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,12 +41,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ThrowOnExtraProperties;
 import com.google.firebase.database.ValueEventListener;
-import com.google.cloud.translate.Translate;
-import com.google.cloud.translate.TranslateOptions;
-import com.google.cloud.translate.Translation;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity implements
         ConnectionCallbacks,
@@ -64,14 +74,24 @@ public class MainActivity extends AppCompatActivity implements
     CustomAdapter adapter;
     ArrayList<user> list;
     ListView listView;
+    String chatid;
     private static final String API_KEY = "AIzaSyDR1QJE_X-rI-kNRguVRKZkwyCiwesjsQo";
+    Boolean idexist=false;
+    ImageView map;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        getWindow().setStatusBarColor(getResources().getColor(R.color.Trans));
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
         setContentView(R.layout.activity_main);
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 // The next two lines tell the new client that “this” current class will handle connection stuff
                 .addConnectionCallbacks(this)
@@ -91,37 +111,64 @@ public class MainActivity extends AppCompatActivity implements
 
         adapter = new CustomAdapter(this, list);
         listView = (ListView) findViewById(R.id.listview);
+        map=findViewById(R.id.map);
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),MapsActivity.class));
+            }
+        });
 
 
 
-        //translation code 
-        TranslateOptions options = TranslateOptions.newBuilder()
-                .setApiKey(API_KEY)
-                .build();
-        Translate translate = options.getService();
-        final Translation translation =
-                translate.translate("Hello World",
-                        Translate.TranslateOption.targetLanguage("de"));
-
-
-                Toast.makeText(getApplicationContext(),translation.getTranslatedText(),Toast.LENGTH_LONG).show();
 
 
 
 
 
         loadData();
-    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            final String chatid = uid.get(position).toString()+userid.getUid();
-            Intent intent=new Intent(getApplicationContext(),ChatActivity.class);
-            intent.putExtra("chatid",chatid);
-            startActivity(intent);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, final int position, long id) {
+                final Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                intent.putExtra("otheruserid",uid.get(position).toString());
+                final String chatid1 = uid.get(position) + userid.getUid();
+                final String chatid2 =  userid.getUid()+uid.get(position);
+                chatid = chatid1;
+                databaseReference = FirebaseDatabase.getInstance().getReference().child("Chats");
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                            if (ds.getKey().equals(chatid1) || ds.getKey().equals(chatid2)) {
+                                chatid = ds.getKey();
+                                idexist = true;
+                                break;
+                            }
+
+                        }
+                        if (!idexist) {
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child("Chats").child(chatid);
+                            databaseReference.child("Messages").setValue("null");
+                        }
+                        intent.putExtra("chatid", chatid);
+                        Pair pairs[]=new Pair[2];
+
+                        startActivity(intent);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
 
 
-        }
-    });
 
 
     }
@@ -272,6 +319,7 @@ public class MainActivity extends AppCompatActivity implements
                 user info = new user(Name, Email, acctype, lat ,lng);
                 list.add(info);
                 listView.setAdapter(adapter);
+
 
 
 

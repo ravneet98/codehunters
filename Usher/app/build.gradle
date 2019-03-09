@@ -36,14 +36,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.firebaseui:firebase-ui:0.6.2'
     implementation 'com.google.android.gms:play-services-location:16.0.0'
-    //implementation 'com.google.cloud:google-cloud-translate:1.64.0'
-    implementation ('com.google.cloud:google-cloud-translate:0.5.0') {
-        exclude group: 'io.grpc', module: 'grpc-all'
-        exclude group: 'com.google.protobuf', module: 'protobuf-java'
-        exclude group: 'com.google.api-client', module: 'google-api-client-appengine'
-    }
+    implementation 'com.android.volley:volley:1.1.0'
 
-    implementation 'com.google.apis:google-api-services-translate:v2-rev51-1.25.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
